@@ -16,6 +16,13 @@ classifier.add(Conv2D(32, (3, 3), input_shape=(64, 64, 3), activation="relu"))
 # carrying out the max pooling
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 
+# adding additional convolution and pooling layers
+classifier.add(Conv2D(32, (3, 3), activation="relu"))
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
+classifier.add(Conv2D(32, (3, 3), activation="relu"))
+classifier.add(MaxPooling2D(pool_size=(2, 2)))
+
 # flattening the input pooled data. flattens the pooled feature maps and puts them into a single vector
 classifier.add(Flatten())
 
