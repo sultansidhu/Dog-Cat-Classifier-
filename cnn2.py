@@ -5,7 +5,10 @@ from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
 from keras.layers import Flatten
 from keras.layers import Dense
+from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
+import numpy
+
 
 # initialize the CNN
 classifier = Sequential()
@@ -57,3 +60,22 @@ classifier.fit_generator(training_set,
                          epochs=25,
                          validation_data=test_set,
                          validation_steps=2000)  # number of images chosen for the test sets
+
+# now we test the images after the training is done, testing image 1
+
+
+def test_images(path: str) -> str:
+    """Tests the image and returns the prediction for the image."""
+    tester = image.load_img(path, target_size=(64, 64))
+    tester = image.img_to_array(tester)
+    tester = numpy.expand_dims(tester, axis=0)
+    img_result = classifier.predict(tester)
+    if img_result[0][0] == 1:
+        return 'IMAGE AT PATH {} IS THAT OF A DOG'.format(path)
+    else:
+        return 'IMAGE AT PATH {} IS THAT OF A CAT'.format(path)
+
+
+if __name__ == '__main__':
+    print(test_images('dataset/single_prediction/cat_or_dog_1.jpg'))
+    print(test_images('dataset/single_prediction/cat_or_dog_2.jpg'))
